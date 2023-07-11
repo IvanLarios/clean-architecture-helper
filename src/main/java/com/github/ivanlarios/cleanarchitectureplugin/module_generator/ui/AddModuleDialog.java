@@ -1,7 +1,7 @@
-package com.github.ivanlarios.cleanarchitectureplugin.ui;
+package com.github.ivanlarios.cleanarchitectureplugin.module_generator.ui;
 
-import com.github.ivanlarios.cleanarchitectureplugin.backend.ModuleCreator;
-import com.github.ivanlarios.cleanarchitectureplugin.models.ModuleModel;
+import com.github.ivanlarios.cleanarchitectureplugin.module_generator.backend.ModuleCreator;
+import com.github.ivanlarios.cleanarchitectureplugin.module_generator.models.ModuleModel;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 
 import javax.swing.*;

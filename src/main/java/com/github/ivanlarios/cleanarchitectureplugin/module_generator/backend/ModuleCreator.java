@@ -1,6 +1,6 @@
-package com.github.ivanlarios.cleanarchitectureplugin.backend;
+package com.github.ivanlarios.cleanarchitectureplugin.module_generator.backend;
 
-import com.github.ivanlarios.cleanarchitectureplugin.models.ModuleModel;
+import com.github.ivanlarios.cleanarchitectureplugin.module_generator.models.ModuleModel;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;

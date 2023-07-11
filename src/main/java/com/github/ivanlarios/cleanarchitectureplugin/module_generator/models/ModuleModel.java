@@ -1,4 +1,4 @@
-package com.github.ivanlarios.cleanarchitectureplugin.models;
+package com.github.ivanlarios.cleanarchitectureplugin.module_generator.models;
 
 public class ModuleModel {
 

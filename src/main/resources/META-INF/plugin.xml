@@ -8,29 +8,45 @@
     <name>Clean-Architecture</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="ivanlarioslopez@gmail.com" url="https://github.com/IvanLarios/clean-architecture-plugin">GitHub</vendor>
+    <vendor email="ivan.larios.lopez@gmail.com" url="https://github.com/IvanLarios/clean-architecture-plugin">GitHub</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
     Plugin for fast creation of clean-architecture modules, having application, domain and infrastructure folders, with
-    posibility to have api and persistence folders in the infrastructure part.
+    posibility to have api and persistence folders in the infrastructure part. It also adds a new inspection rule that
+    will throw a warning everytime you use an infrastructure import in a domain or application file.
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
 
+        <localInspection
+                language="JAVA"
+                bundle="messages.DependencyInspector"
+                key="inspection.cleanarchitecture.import.references.display.name"
+                groupPath="Java"
+                groupBundle="messages.InspectionsBundle"
+                groupKey="group.names.probable.bugs"
+                enabledByDefault="true"
+                displayName="Infrastructure file imported on domain or application."
+                shortName="CleanArchitectureInspector"
+                level="WARNING"
+                implementationClass="com.github.ivanlarios.cleanarchitectureplugin.dependency_inspector.DependencyInspector"
+                />
+
     </extensions>
 
     <actions>
-        <action id="com.github.ivanlarios.cleanarchitectureplugin.MainAction"
-                class="com.github.ivanlarios.cleanarchitectureplugin.MainAction"
+        <action id="com.github.ivanlarios.cleanarchitectureplugin.module_generator.MainAction"
+                class="com.github.ivanlarios.cleanarchitectureplugin.module_generator.MainAction"
                 text="Generate Clean Architecture Module"
                 description="Generates clean-architecture folder structure"
                 icon="AllIcons.Nodes.Folder">

@@ -1,6 +1,6 @@
-package com.github.ivanlarios.cleanarchitectureplugin;
+package com.github.ivanlarios.cleanarchitectureplugin.module_generator;
 
-import com.github.ivanlarios.cleanarchitectureplugin.ui.AddModuleDialog;
+import com.github.ivanlarios.cleanarchitectureplugin.module_generator.ui.AddModuleDialog;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
