@@ -28,7 +28,6 @@
 
     </extensions>
 
-
     <actions>
         <action id="com.github.ivanlarios.cleanarchitectureplugin.MainAction"
                 class="com.github.ivanlarios.cleanarchitectureplugin.MainAction"
@@ -38,4 +37,5 @@
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
     </actions>
+
 </idea-plugin>

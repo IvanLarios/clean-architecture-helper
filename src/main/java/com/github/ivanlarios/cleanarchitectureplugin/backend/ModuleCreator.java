@@ -9,17 +9,13 @@ import com.intellij.psi.PsiDirectory;
 
 public class ModuleCreator {
     public static void createModuleFolderStructure(ModuleModel module, Project project, PsiDirectory baseDirectory) {
-
-        // Setting scope to write files and directories
         WriteCommandAction.runWriteCommandAction(project, () -> createFilesAndDirectories(module, baseDirectory));
     }
-
-    // recursive dfs type algorithm write directories and files from HashMap
     private static void createFilesAndDirectories(ModuleModel data, PsiDirectory baseDirectory) {
         PsiDirectory baseModuleDirectory = baseDirectory.createSubdirectory(data.getName());
         baseModuleDirectory.createSubdirectory("application");
         baseModuleDirectory.createSubdirectory("domain");
-        PsiDirectory infraestructureDirectory = baseModuleDirectory.createSubdirectory("infraestructure");
+        PsiDirectory infraestructureDirectory = baseModuleDirectory.createSubdirectory("infrastructure");
         if(data.hasApi()) {
             infraestructureDirectory.createSubdirectory("api");
         }
