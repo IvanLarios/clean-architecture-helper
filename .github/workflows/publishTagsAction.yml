@@ -1,0 +1,27 @@
+name: Publish Stable Tag release
+
+on:
+  push:
+    tags:
+    - '^v\d+(\.\d+){2}$'
+env:
+  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+  PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
+  PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+  CERTIFICATE_CHAIN: ${{ secrets.CERTIFICATE_CHAIN }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Run Gradle Plugin Publish
+        run: ./gradlew pluginPublish
