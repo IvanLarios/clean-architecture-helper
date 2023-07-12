@@ -4,9 +4,13 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Secrets ###
+/certs/**
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
+.idea/kotlinScripting.xml
 .idea/compiler.xml
 .idea/libraries/
 *.iws
@@ -40,3 +44,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+

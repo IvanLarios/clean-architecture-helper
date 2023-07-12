@@ -4,10 +4,14 @@ plugins {
 }
 
 group = "com.github.ivanlarios"
-version = "1.1.1"
+version = "1.1.2"
 
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    implementation("org.jetbrains:marketplace-zip-signer:0.1.8")
 }
 
 // Configure Gradle IntelliJ Plugin
@@ -30,12 +34,17 @@ tasks {
     }
 
     signPlugin {
-        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(System.getenv("PRIVATE_KEY"))
+        certificateChain.set(System.getenv("CERTIFICATE_CHAIN") ?: File("./certs/chain.crt").readText(Charsets.UTF_8))
+        privateKey.set(System.getenv("PRIVATE_KEY") ?: File("./certs/privateKey.pem").readText(Charsets.UTF_8))
         password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
     }
 
+    downloadZipSigner{
+        version.set("0.1.8")
+    }
+
     publishPlugin {
+        channels.set(listOf(System.getenv("CHANNEL") ?: "Stable"))
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
 }
