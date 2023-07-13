@@ -1,4 +1,4 @@
-package com.github.ivanlarios.cleanarchitectureplugin.dependency_inspector;
+package com.github.ivanlarios.cleanarchitectureplugin.settings;
 
 import com.intellij.AbstractBundle;
 import org.jetbrains.annotations.Nls;
@@ -6,12 +6,12 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
 
-public final class InspectionsBundle extends AbstractBundle {
+public final class CleanArchitectureBundle extends AbstractBundle {
     @NonNls
-    public static final String BUNDLE_NAME = "messages.DependencyInspector";
-    private static final InspectionsBundle INSTANCE = new InspectionsBundle();
+    public static final String BUNDLE_NAME = "messages.CleanArchitecture";
+    private static final CleanArchitectureBundle INSTANCE = new CleanArchitectureBundle();
 
-    private InspectionsBundle() {
+    private CleanArchitectureBundle() {
         super(BUNDLE_NAME);
     }
 

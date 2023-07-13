@@ -30,8 +30,8 @@
 
         <localInspection
                 language="JAVA"
-                bundle="messages.DependencyInspector"
-                key="inspection.cleanarchitecture.import.references.display.name"
+                bundle="messages.CleanArchitecture"
+                key="cleanarchitecture.import.references.display.name"
                 groupPath="Java"
                 groupBundle="messages.InspectionsBundle"
                 groupKey="group.names.probable.bugs"
@@ -41,6 +41,13 @@
                 level="WARNING"
                 implementationClass="com.github.ivanlarios.cleanarchitectureplugin.dependency_inspector.DependencyInspector"
                 />
+        <applicationService serviceImplementation="com.github.ivanlarios.cleanarchitectureplugin.settings.PluginSettingState" />
+
+        <projectConfigurable
+                parentId="editor"
+                displayName="Clean Architecture Plugin Settings"
+                instance="com.github.ivanlarios.cleanarchitectureplugin.settings.PluginSettings"
+                id="com.github.ivanlarios.cleanarchitectureplugin.settings.PluginSettings" />
 
     </extensions>
 
