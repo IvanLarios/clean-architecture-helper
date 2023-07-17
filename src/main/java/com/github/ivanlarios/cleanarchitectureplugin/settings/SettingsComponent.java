@@ -14,11 +14,12 @@ import java.util.Objects;
 
 public class SettingsComponent {
 
-    private final String[] restrictionLevelOptions = {"Error", "Warning", "Informative"};
+    private final String[] restrictionLevelOptions = {"Error", "Warning", "Weak warning", "Informative"};
     private final static ImmutableMap<String, ProblemHighlightType> restrictionLevelToHighlightType =
             new ImmutableMap.Builder<String, ProblemHighlightType>()
                     .put("Error", ProblemHighlightType.ERROR)
                     .put("Warning", ProblemHighlightType.WARNING)
+                    .put("Weak warning", ProblemHighlightType.WEAK_WARNING)
                     .put("Informative", ProblemHighlightType.INFORMATION)
                     .build();
 

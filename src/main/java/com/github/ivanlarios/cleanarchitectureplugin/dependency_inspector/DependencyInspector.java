@@ -39,12 +39,12 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
                                     CleanArchitectureBundle.message("cleanarchitecture.import.references.problems.infra.descriptor"),
                                     state.restrictionLevel);
                         }
-                        if(isFromJavaSDK(importStatement) || hasDomain(importStatement)){
-                            continue;
+                        if(!isFromJavaSDK(importStatement) && !hasDomain(importStatement)){
+                            holder.registerProblem(importStatement,
+                                    CleanArchitectureBundle.message("cleanarchitecture.import.references.problems.app.descriptor"),
+                                    state.restrictionLevel);
                         }
-                        holder.registerProblem(importStatement,
-                                CleanArchitectureBundle.message("cleanarchitecture.import.references.problems.app.descriptor"),
-                                state.restrictionLevel);
+
                     }
                     if(filePath.contains("application")){
                         if(hasInfraestructure(importStatement)){
@@ -52,12 +52,12 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
                                     CleanArchitectureBundle.message("cleanarchitecture.import.references.problems.infra.descriptor"),
                                     state.restrictionLevel);
                         }
-                        if(hasApplication(importStatement) || hasDomain(importStatement) || isFromJavaSDK(importStatement)) {
-                            continue;
+                        if(!hasApplication(importStatement) && !hasDomain(importStatement) && !isFromJavaSDK(importStatement)) {
+                            holder.registerProblem(importStatement,
+                                    CleanArchitectureBundle.message("cleanarchitecture.import.references.problems.app.descriptor"),
+                                    state.restrictionLevel);
                         }
-                        holder.registerProblem(importStatement,
-                                CleanArchitectureBundle.message("cleanarchitecture.import.references.problems.app.descriptor"),
-                                state.restrictionLevel);
+
                     }
                 }
             }
