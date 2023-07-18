@@ -1,17 +1,23 @@
 package com.github.ivanlarios.cleanarchitectureplugin.settings;
 
-import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.openapi.options.Configurable;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
 public class PluginSettings implements Configurable {
 
-    private final PluginSettingState state = ApplicationManager.getApplication().getService(PluginSettingState.class);
-
+    private final Project project;
+    private final PluginSettingState state;
     private SettingsComponent settingsComponent;
+    public PluginSettings(@NotNull final Project project){
+        this.project = project;
+        state = project.getService(PluginSettingState.class);
+    }
 
     @Override
     public @NlsContexts.ConfigurableName String getDisplayName() {
@@ -31,7 +37,7 @@ public class PluginSettings implements Configurable {
 
     @Override
     public boolean isModified() {
-        PluginSettingState settings = PluginSettingState.getInstance();
+        PluginSettingState settings = PluginSettingState.getInstance(project);
         boolean modified = settings.enableLinter == settingsComponent.getEnableLinter();
         modified = modified || settings.disallowExternalImportsInDomain == settingsComponent.getDisallowExternalImportsInDomain();
         modified = modified || settings.disallowExternalImportsInApplication == settingsComponent.getDisallowExternalImportsInApplication();
@@ -45,6 +51,14 @@ public class PluginSettings implements Configurable {
         state.disallowExternalImportsInDomain = settingsComponent.getDisallowExternalImportsInDomain();
         state.disallowExternalImportsInApplication = settingsComponent.getDisallowExternalImportsInApplication();
         state.restrictionLevel = settingsComponent.getRestrictionLevel();
+    }
+
+    @Override
+    public void reset() {
+        state.enableLinter = false;
+        state.disallowExternalImportsInDomain = false;
+        state.disallowExternalImportsInApplication = false;
+        state.restrictionLevel = ProblemHighlightType.WEAK_WARNING;
     }
 
     @Override

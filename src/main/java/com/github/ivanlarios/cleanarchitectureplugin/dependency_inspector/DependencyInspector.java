@@ -14,7 +14,7 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
     @Override
     public @NotNull PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
 
-        PluginSettingState state = PluginSettingState.getInstance();
+        PluginSettingState state = PluginSettingState.getInstance(holder.getProject());
         if(!state.enableLinter)
             return PsiElementVisitor.EMPTY_VISITOR;
         return new JavaElementVisitor() {
@@ -48,7 +48,7 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
                     return;
                 }
                 String modulePath = packagePath.substring(packagePath.indexOf("/main/")+6, packagePath.indexOf("/domain")+7).replace('/', '.');
-                String importModulePath = importStatement.getImportReference().getQualifiedName();
+                String importModulePath = Objects.requireNonNull(importStatement.getImportReference()).getQualifiedName();
                 if(!importModulePath.startsWith(modulePath)
                         && !importModulePath.contains("shared.domain")
                         && !isFromJavaSDK(importStatement)
@@ -65,7 +65,7 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
                     return;
                 }
                 String modulePath = packagePath.substring(packagePath.indexOf("/main/")+6, packagePath.indexOf("/application")+12).replace('/', '.');
-                String importModulePath = importStatement.getImportReference().getQualifiedName();
+                String importModulePath = Objects.requireNonNull(importStatement.getImportReference()).getQualifiedName();
                 if(!importModulePath.startsWith(modulePath)
                         && !importModulePath.startsWith(modulePath.replace(".application", ".domain"))
                         && !importModulePath.contains("shared.domain")

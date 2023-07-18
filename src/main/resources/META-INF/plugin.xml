@@ -14,10 +14,24 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Plugin for fast creation of clean-architecture modules, having application, domain and infrastructure folders, with
-    posibility to have api and persistence folders in the infrastructure part. It also adds a new inspection rule that
-    will throw a warning everytime you use an infrastructure import in a domain or application file.
+    This plugin adds some tools and inspections to help you and your team in the process of working with clean or hexagonal
+    architectures.
+    <h3>Features</h3>
+    <ul>
+        <li>You can create a new module following the clean architecture guidelines by right-clicking a folder and selecting
+        "Generate Clean Architecture Module". </li>
+        <li>You can enable and customize code inspections that will highlight your code whenever you break one of the rules
+        of a Clean Architecture according to your restriction level.</li>
+    </ul>
   ]]></description>
+
+    <change-notes><![CDATA[
+		<h3>1.2.0</h3>
+		<ul>
+			<li>Added settings to customize inspection restriction levels. </li>
+			<li>Upgraded plugin stability.</li>
+		</ul>
+	]]></change-notes>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -41,7 +55,7 @@
                 level="WARNING"
                 implementationClass="com.github.ivanlarios.cleanarchitectureplugin.dependency_inspector.DependencyInspector"
                 />
-        <applicationService serviceImplementation="com.github.ivanlarios.cleanarchitectureplugin.settings.PluginSettingState" />
+        <projectService serviceImplementation="com.github.ivanlarios.cleanarchitectureplugin.settings.PluginSettingState" />
 
         <projectConfigurable
                 parentId="editor"
