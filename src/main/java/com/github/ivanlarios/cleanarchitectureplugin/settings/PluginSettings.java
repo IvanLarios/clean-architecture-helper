@@ -33,8 +33,8 @@ public class PluginSettings implements Configurable {
     public boolean isModified() {
         PluginSettingState settings = PluginSettingState.getInstance();
         boolean modified = settings.enableLinter == settingsComponent.getEnableLinter();
-        modified = modified || settings.allowExternalImportsInDomain == settingsComponent.getAllowExternalImportsInDomain();
-        modified = modified || settings.allowExternalImportsInApplication == settingsComponent.getAllowExternalImportsInApplication();
+        modified = modified || settings.disallowExternalImportsInDomain == settingsComponent.getDisallowExternalImportsInDomain();
+        modified = modified || settings.disallowExternalImportsInApplication == settingsComponent.getDisallowExternalImportsInApplication();
         modified = modified || settings.restrictionLevel == settingsComponent.getRestrictionLevel();
         return modified;
     }
@@ -42,8 +42,8 @@ public class PluginSettings implements Configurable {
     @Override
     public void apply() {
         state.enableLinter = settingsComponent.getEnableLinter();
-        state.allowExternalImportsInDomain = settingsComponent.getAllowExternalImportsInDomain();
-        state.allowExternalImportsInApplication = settingsComponent.getAllowExternalImportsInApplication();
+        state.disallowExternalImportsInDomain = settingsComponent.getDisallowExternalImportsInDomain();
+        state.disallowExternalImportsInApplication = settingsComponent.getDisallowExternalImportsInApplication();
         state.restrictionLevel = settingsComponent.getRestrictionLevel();
     }
 

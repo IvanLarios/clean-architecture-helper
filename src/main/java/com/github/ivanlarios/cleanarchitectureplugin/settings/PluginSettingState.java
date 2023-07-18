@@ -17,15 +17,15 @@ public class PluginSettingState implements PersistentStateComponent<PluginSettin
 
     public boolean enableLinter = false;
     public ProblemHighlightType restrictionLevel = ProblemHighlightType.WEAK_WARNING;
-    public boolean allowExternalImportsInDomain = false;
-    public boolean allowExternalImportsInApplication = false;
+    public boolean disallowExternalImportsInDomain = false;
+    public boolean disallowExternalImportsInApplication = false;
 
     @Override
     public void initializeComponent() {
         this.enableLinter = false;
         this.restrictionLevel = ProblemHighlightType.WEAK_WARNING;
-        allowExternalImportsInDomain = false;
-        allowExternalImportsInApplication = false;
+        this.disallowExternalImportsInDomain = false;
+        this.disallowExternalImportsInApplication = false;
     }
     public static PluginSettingState getInstance() {
         return ApplicationManager.getApplication().getService(PluginSettingState.class);

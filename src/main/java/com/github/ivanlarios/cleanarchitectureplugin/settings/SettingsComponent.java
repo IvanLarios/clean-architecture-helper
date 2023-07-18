@@ -26,15 +26,15 @@ public class SettingsComponent {
     private final JPanel mainPanel;
     private final JBCheckBox enableLinter = new JBCheckBox("Enable linter");
     private final ComboBox<String> restrictionLevel = new ComboBox<>(restrictionLevelOptions);
-    private final JBCheckBox allowExternalImportsInDomain = new JBCheckBox("Only allow domain imports on domain layer");
-    private final JBCheckBox allowExternalImportsInApplication = new JBCheckBox("Only allow domain and application imports on application layer");
+    private final JBCheckBox disallowExternalImportsInDomain = new JBCheckBox("Only allow domain imports on domain layer");
+    private final JBCheckBox disallowExternalImportsInApplication = new JBCheckBox("Only allow domain and application imports on application layer");
 
     public SettingsComponent(PluginSettingState state) {
         mainPanel = FormBuilder.createFormBuilder()
                 .addComponent(enableLinter)
                 .addLabeledComponent(new JBLabel("Select a restriction level for inspection "), restrictionLevel, 1, false)
-                .addComponent(allowExternalImportsInDomain, 0)
-                .addComponent(allowExternalImportsInApplication, 0)
+                .addComponent(disallowExternalImportsInDomain, 0)
+                .addComponent(disallowExternalImportsInApplication, 0)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
         enableLinter.addActionListener(e -> updateLinterState(enableLinter.isSelected()));
@@ -50,14 +50,14 @@ public class SettingsComponent {
                         .map(Map.Entry::getKey)
                         .findFirst().orElse("Informative");
         setRestrictionLevel(stateRestrictionLevel);
-        setAllowExternalImportsInApplication(state.allowExternalImportsInApplication);
-        setAllowExternalImportsInDomain(state.allowExternalImportsInDomain);
+        setDisallowExternalImportsInApplication(state.disallowExternalImportsInApplication);
+        setDisallowExternalImportsInDomain(state.disallowExternalImportsInDomain);
     }
 
     private void updateLinterState(boolean isSelected){
         restrictionLevel.setEnabled(isSelected);
-        allowExternalImportsInApplication.setEnabled(isSelected);
-        allowExternalImportsInDomain.setEnabled(isSelected);
+        disallowExternalImportsInApplication.setEnabled(isSelected);
+        disallowExternalImportsInDomain.setEnabled(isSelected);
     }
 
     public JPanel getPanel() {
@@ -89,20 +89,20 @@ public class SettingsComponent {
         restrictionLevel.setSelectedItem(restrictionLevelItem);
     }
 
-    public boolean getAllowExternalImportsInDomain() {
-        return allowExternalImportsInDomain.isSelected();
+    public boolean getDisallowExternalImportsInDomain() {
+        return disallowExternalImportsInDomain.isSelected();
     }
 
-    public void setAllowExternalImportsInDomain(boolean newStatus) {
-        allowExternalImportsInDomain.setSelected(newStatus);
+    public void setDisallowExternalImportsInDomain(boolean newStatus) {
+        disallowExternalImportsInDomain.setSelected(newStatus);
     }
 
-    public boolean getAllowExternalImportsInApplication() {
-        return allowExternalImportsInApplication.isSelected();
+    public boolean getDisallowExternalImportsInApplication() {
+        return disallowExternalImportsInApplication.isSelected();
     }
 
-    public void setAllowExternalImportsInApplication(boolean newStatus) {
-        allowExternalImportsInApplication.setSelected(newStatus);
+    public void setDisallowExternalImportsInApplication(boolean newStatus) {
+        disallowExternalImportsInApplication.setSelected(newStatus);
     }
 
 }
