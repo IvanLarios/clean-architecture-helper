@@ -27,12 +27,6 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
                     return;
                 }
                 for(PsiImportStatementBase importStatement : importList.getAllImportStatements()) {
-                    if(filePath.contains("/domain") && !state.disallowExternalImportsInDomain) {
-                        continue;
-                    }
-                    if(filePath.contains("/application") && !state.disallowExternalImportsInDomain) {
-                        continue;
-                    }
                     if(filePath.contains("/domain")){
                         verifyDomainFile(filePath, importStatement);
                         continue;

@@ -1,6 +1,5 @@
 package com.github.ivanlarios.cleanarchitectureplugin.settings;
 
-import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
@@ -14,6 +13,7 @@ public class PluginSettings implements Configurable {
     private final Project project;
     private final PluginSettingState state;
     private SettingsComponent settingsComponent;
+
     public PluginSettings(@NotNull final Project project){
         this.project = project;
         state = project.getService(PluginSettingState.class);
@@ -38,11 +38,7 @@ public class PluginSettings implements Configurable {
     @Override
     public boolean isModified() {
         PluginSettingState settings = PluginSettingState.getInstance(project);
-        boolean modified = settings.enableLinter == settingsComponent.getEnableLinter();
-        modified = modified || settings.disallowExternalImportsInDomain == settingsComponent.getDisallowExternalImportsInDomain();
-        modified = modified || settings.disallowExternalImportsInApplication == settingsComponent.getDisallowExternalImportsInApplication();
-        modified = modified || settings.restrictionLevel == settingsComponent.getRestrictionLevel();
-        return modified;
+        return settings.equals(state);
     }
 
     @Override
@@ -55,10 +51,7 @@ public class PluginSettings implements Configurable {
 
     @Override
     public void reset() {
-        state.enableLinter = false;
-        state.disallowExternalImportsInDomain = false;
-        state.disallowExternalImportsInApplication = false;
-        state.restrictionLevel = ProblemHighlightType.WEAK_WARNING;
+        settingsComponent.setComponentState(state);
     }
 
     @Override

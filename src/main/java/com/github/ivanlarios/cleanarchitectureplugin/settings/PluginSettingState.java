@@ -42,4 +42,17 @@ public class PluginSettingState implements PersistentStateComponent<PluginSettin
     public void loadState(@NotNull PluginSettingState state) {
         XmlSerializerUtil.copyBean(state, this);
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if(!(object instanceof PluginSettingState anotherState)){
+            return false;
+        }
+        boolean equals = true;
+        equals &= this.enableLinter == anotherState.enableLinter;
+        equals &= this.restrictionLevel == anotherState.restrictionLevel;
+        equals &= this.disallowExternalImportsInDomain == anotherState.disallowExternalImportsInDomain;
+        equals &= this.disallowExternalImportsInApplication == anotherState.disallowExternalImportsInApplication;
+        return equals;
+    }
 }

@@ -38,11 +38,10 @@ public class SettingsComponent {
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
         enableLinter.addActionListener(e -> updateLinterState(enableLinter.isSelected()));
-        initComponentState(state);
-        updateLinterState(state.enableLinter);
+        setComponentState(state);
     }
 
-    private void initComponentState(PluginSettingState state) {
+    public void setComponentState(PluginSettingState state) {
         setEnableLinter(state.enableLinter);
         String stateRestrictionLevel =
                 restrictionLevelToHighlightType.entrySet().stream()
@@ -52,6 +51,7 @@ public class SettingsComponent {
         setRestrictionLevel(stateRestrictionLevel);
         setDisallowExternalImportsInApplication(state.disallowExternalImportsInApplication);
         setDisallowExternalImportsInDomain(state.disallowExternalImportsInDomain);
+        updateLinterState(state.enableLinter);
     }
 
     private void updateLinterState(boolean isSelected){
