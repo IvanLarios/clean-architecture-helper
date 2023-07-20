@@ -1,5 +1,6 @@
 package com.github.ivanlarios.cleanarchitectureplugin.settings;
 
+import com.github.ivanlarios.cleanarchitectureplugin.settings.ui.SettingsComponent;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
@@ -47,6 +48,7 @@ public class PluginSettings implements Configurable {
         state.disallowExternalImportsInDomain = settingsComponent.getDisallowExternalImportsInDomain();
         state.disallowExternalImportsInApplication = settingsComponent.getDisallowExternalImportsInApplication();
         state.restrictionLevel = settingsComponent.getRestrictionLevel();
+        state.importExceptions = settingsComponent.getExceptions();
     }
 
     @Override

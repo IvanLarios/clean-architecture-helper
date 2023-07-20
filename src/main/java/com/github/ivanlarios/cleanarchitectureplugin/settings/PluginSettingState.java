@@ -10,6 +10,9 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @State(
         name = "com.github.ivanlarios.cleanarchitectureplugin.settings.PluginSettingState",
         storages = {@Storage("cleanArchitectureSettings.xml")},
@@ -21,12 +24,14 @@ public class PluginSettingState implements PersistentStateComponent<PluginSettin
     public ProblemHighlightType restrictionLevel;
     public boolean disallowExternalImportsInDomain;
     public boolean disallowExternalImportsInApplication;
+    public List<String> importExceptions;
 
     public PluginSettingState(){
         this.enableLinter = false;
         this.restrictionLevel = ProblemHighlightType.WEAK_WARNING;
         this.disallowExternalImportsInDomain = false;
         this.disallowExternalImportsInApplication = false;
+        this.importExceptions = new ArrayList<>();
     }
 
     public static PluginSettingState getInstance(@NotNull final Project project) {
@@ -48,11 +53,13 @@ public class PluginSettingState implements PersistentStateComponent<PluginSettin
         if(!(object instanceof PluginSettingState anotherState)){
             return false;
         }
-        boolean equals = true;
-        equals &= this.enableLinter == anotherState.enableLinter;
-        equals &= this.restrictionLevel == anotherState.restrictionLevel;
-        equals &= this.disallowExternalImportsInDomain == anotherState.disallowExternalImportsInDomain;
-        equals &= this.disallowExternalImportsInApplication == anotherState.disallowExternalImportsInApplication;
-        return equals;
+        if(this == object) {
+            return true;
+        }
+        return this.enableLinter == anotherState.enableLinter
+        && this.restrictionLevel == anotherState.restrictionLevel
+        && this.disallowExternalImportsInDomain == anotherState.disallowExternalImportsInDomain
+        && this.disallowExternalImportsInApplication == anotherState.disallowExternalImportsInApplication
+        && this.importExceptions.equals(anotherState.importExceptions);
     }
 }
