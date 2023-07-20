@@ -1,5 +1,7 @@
-package com.github.ivanlarios.cleanarchitectureplugin.settings;
+package com.github.ivanlarios.cleanarchitectureplugin.settings.ui;
 
+import com.github.ivanlarios.cleanarchitectureplugin.settings.CleanArchitectureBundle;
+import com.github.ivanlarios.cleanarchitectureplugin.settings.PluginSettingState;
 import com.google.common.collect.ImmutableMap;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.openapi.ui.ComboBox;
@@ -9,32 +11,39 @@ import com.intellij.util.ui.FormBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.List;
 
 public class SettingsComponent {
 
-    private final String[] restrictionLevelOptions = {"Error", "Warning", "Weak warning", "Informative"};
+    private final String[] restrictionLevelOptions = {
+            CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.error"),
+            CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.warning"),
+            CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.weakwarn"),
+            CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.info")
+    };
     private final static ImmutableMap<String, ProblemHighlightType> restrictionLevelToHighlightType =
             new ImmutableMap.Builder<String, ProblemHighlightType>()
-                    .put("Error", ProblemHighlightType.ERROR)
-                    .put("Warning", ProblemHighlightType.WARNING)
-                    .put("Weak warning", ProblemHighlightType.WEAK_WARNING)
-                    .put("Informative", ProblemHighlightType.INFORMATION)
+                    .put(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.error"), ProblemHighlightType.ERROR)
+                    .put(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.warning"), ProblemHighlightType.WARNING)
+                    .put(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.weakwarn"), ProblemHighlightType.WEAK_WARNING)
+                    .put(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.info"), ProblemHighlightType.INFORMATION)
                     .build();
 
     private final JPanel mainPanel;
-    private final JBCheckBox enableLinter = new JBCheckBox("Enable linter");
+    private final JBCheckBox enableLinter = new JBCheckBox(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.enable.checkbox"));
     private final ComboBox<String> restrictionLevel = new ComboBox<>(restrictionLevelOptions);
-    private final JBCheckBox disallowExternalImportsInDomain = new JBCheckBox("Only allow domain imports on domain layer");
-    private final JBCheckBox disallowExternalImportsInApplication = new JBCheckBox("Only allow domain and application imports on application layer");
+    private final JBCheckBox disallowExternalImportsInDomain = new JBCheckBox(CleanArchitectureBundle.message("cleanarchitecture.settings.imports.domain.allow.checkbox"));
+    private final JBCheckBox disallowExternalImportsInApplication = new JBCheckBox(CleanArchitectureBundle.message("cleanarchitecture.settings.imports.application.allow.checkbox"));
+    private final ImportExceptionsPanel importExceptionList = new ImportExceptionsPanel();
 
     public SettingsComponent(PluginSettingState state) {
         mainPanel = FormBuilder.createFormBuilder()
                 .addComponent(enableLinter)
-                .addLabeledComponent(new JBLabel("Select a restriction level for inspection "), restrictionLevel, 1, false)
+                .addLabeledComponent(new JBLabel(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.label")), restrictionLevel, 1, false)
                 .addComponent(disallowExternalImportsInDomain, 0)
                 .addComponent(disallowExternalImportsInApplication, 0)
+                .addComponent(importExceptionList)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
         enableLinter.addActionListener(e -> updateLinterState(enableLinter.isSelected()));
@@ -47,10 +56,11 @@ public class SettingsComponent {
                 restrictionLevelToHighlightType.entrySet().stream()
                         .filter(r -> r.getValue().equals(state.restrictionLevel))
                         .map(Map.Entry::getKey)
-                        .findFirst().orElse("Informative");
+                        .findFirst().orElse(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.info"));
         setRestrictionLevel(stateRestrictionLevel);
         setDisallowExternalImportsInApplication(state.disallowExternalImportsInApplication);
         setDisallowExternalImportsInDomain(state.disallowExternalImportsInDomain);
+        setExceptions(state.importExceptions);
         updateLinterState(state.enableLinter);
     }
 
@@ -103,6 +113,14 @@ public class SettingsComponent {
 
     public void setDisallowExternalImportsInApplication(boolean newStatus) {
         disallowExternalImportsInApplication.setSelected(newStatus);
+    }
+
+    public List<String> getExceptions(){
+        return this.importExceptionList.getExceptionList();
+    }
+
+    public void setExceptions(List<String> exceptions){
+        this.importExceptionList.setExceptionList(exceptions);
     }
 
 }

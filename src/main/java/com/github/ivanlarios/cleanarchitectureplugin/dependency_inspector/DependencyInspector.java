@@ -45,6 +45,7 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
                 String importModulePath = Objects.requireNonNull(importStatement.getImportReference()).getQualifiedName();
                 if(!importModulePath.startsWith(modulePath)
                         && !importModulePath.contains("shared.domain")
+                        && !isOnExceptionList(importStatement)
                         && !isFromJavaSDK(importStatement)
                 ){
                     holder.registerProblem(importStatement,
@@ -64,6 +65,7 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
                         && !importModulePath.startsWith(modulePath.replace(".application", ".domain"))
                         && !importModulePath.contains("shared.domain")
                         && !importModulePath.contains("shared.application")
+                        && !isOnExceptionList(importStatement)
                         && !isFromJavaSDK(importStatement)
                 ){
                     holder.registerProblem(importStatement,
@@ -73,6 +75,12 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
 
             }
 
+            private boolean isOnExceptionList(PsiImportStatementBase importStatement){
+                return state.importExceptions.stream()
+                        .anyMatch(exception ->
+                                Objects.requireNonNull(importStatement.getImportReference()).getQualifiedName().startsWith(exception)
+                        );
+            }
             private boolean isFromJavaSDK(PsiImportStatementBase importStatement) {
                 return Objects.requireNonNull(importStatement.getImportReference()).getQualifiedName().startsWith("java");
             }
