@@ -31,5 +31,5 @@ jobs:
           gradle-version: 8.2.1
       - name: Grant execute permission to Gradle wrapper
         run: chmod +x ./gradlew
-      - name: Run Gradle Plugin Publish
-        run: ./gradlew pluginPublish
+      - name: Run Gradle Plublish Plugin
+        run: ./gradlew publishPlugin
