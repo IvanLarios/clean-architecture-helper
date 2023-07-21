@@ -19,7 +19,7 @@ public class MainAction extends AnAction {
     }
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
-        AddModuleDialog.main(event);
+        AddModuleDialog.initDialog(event);
     }
 
     private boolean isPsiElementDirectory(@NotNull AnActionEvent event){

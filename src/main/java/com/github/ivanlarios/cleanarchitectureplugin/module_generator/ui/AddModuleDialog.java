@@ -47,7 +47,7 @@ public class AddModuleDialog extends JDialog {
         dispose();
     }
 
-    public static void main(AnActionEvent e) {
+    public static void initDialog(AnActionEvent e) {
         AddModuleDialog dialog = new AddModuleDialog(e);
         dialog.setUndecorated(true);
         dialog.pack();
