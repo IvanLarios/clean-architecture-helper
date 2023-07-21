@@ -29,7 +29,9 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 8.2.1
+
       - name: Grant execute permission to Gradle wrapper
         run: chmod +x ./gradlew
-      - name: Run Gradle Plublish Plugin
+
+      - name: Run Gradle Publish Plugin
         run: ./gradlew publishPlugin

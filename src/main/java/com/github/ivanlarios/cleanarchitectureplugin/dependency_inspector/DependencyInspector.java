@@ -10,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
+    
+    static final String DOMAIN_CONTEXT_PATH = ".domain";
+    static final String APPLICATION_CONTEXT_PATH = ".application";
 
     @Override
     public @NotNull PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
@@ -17,33 +20,36 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
         PluginSettingState state = PluginSettingState.getInstance(holder.getProject());
         if(!state.enableLinter)
             return PsiElementVisitor.EMPTY_VISITOR;
+
+        String packageName = ((PsiJavaFile)holder.getFile()).getPackageName();
+        String filePath = holder.getFile().getContainingDirectory().getVirtualFile().getPath();
+
         return new JavaElementVisitor() {
 
             @Override
-            public void visitImportList(@NotNull PsiImportList importList) {
+            public void visitImportList(@NotNull PsiImportList importList){
                 super.visitImportList(importList);
-                String filePath = importList.getContainingFile().getContainingDirectory().getVirtualFile().getPath();
-                if (!filePath.contains("/domain") && !filePath.contains("/application")) {
+                if ((!packageName.contains(DOMAIN_CONTEXT_PATH) && !packageName.contains(APPLICATION_CONTEXT_PATH)) || filePath.contains("/test/")) {
                     return;
                 }
                 for(PsiImportStatementBase importStatement : importList.getAllImportStatements()) {
-                    if(filePath.contains("/domain")){
-                        verifyDomainFile(filePath, importStatement);
+                    if(packageName.contains(DOMAIN_CONTEXT_PATH)){
+                        verifyDomainFile(packageName, importStatement);
                         continue;
                     }
-                    if(filePath.contains("application")){
-                        verifyApplicationFile(filePath, importStatement);
+                    if(packageName.contains(APPLICATION_CONTEXT_PATH)){
+                        verifyApplicationFile(packageName, importStatement);
                     }
                 }
             }
 
-            private void verifyDomainFile(String packagePath, PsiImportStatementBase importStatement){
+            private void verifyDomainFile(String packageName, PsiImportStatementBase importStatement){
                 if(!state.disallowExternalImportsInDomain){
                     return;
                 }
-                String modulePath = packagePath.substring(packagePath.indexOf("/main/")+6, packagePath.indexOf("/domain")+7).replace('/', '.');
+                String domainPackagePath = packageName.substring(0, packageName.indexOf(DOMAIN_CONTEXT_PATH)+DOMAIN_CONTEXT_PATH.length());
                 String importModulePath = Objects.requireNonNull(importStatement.getImportReference()).getQualifiedName();
-                if(!importModulePath.startsWith(modulePath)
+                if(!importModulePath.startsWith(domainPackagePath)
                         && !importModulePath.contains("shared.domain")
                         && !isOnExceptionList(importStatement)
                         && !isFromJavaSDK(importStatement)
@@ -55,14 +61,14 @@ public class DependencyInspector extends AbstractBaseJavaLocalInspectionTool {
 
             }
 
-            private void verifyApplicationFile(String packagePath, PsiImportStatementBase importStatement){
+            private void verifyApplicationFile(String packageName, PsiImportStatementBase importStatement){
                 if(!state.disallowExternalImportsInApplication){
                     return;
                 }
-                String modulePath = packagePath.substring(packagePath.indexOf("/main/")+6, packagePath.indexOf("/application")+12).replace('/', '.');
+                String applicationPackagePath = packageName.substring(0, packageName.indexOf(APPLICATION_CONTEXT_PATH)+APPLICATION_CONTEXT_PATH.length());
                 String importModulePath = Objects.requireNonNull(importStatement.getImportReference()).getQualifiedName();
-                if(!importModulePath.startsWith(modulePath)
-                        && !importModulePath.startsWith(modulePath.replace(".application", ".domain"))
+                if(!importModulePath.startsWith(applicationPackagePath)
+                        && !importModulePath.startsWith(applicationPackagePath.replace(APPLICATION_CONTEXT_PATH, DOMAIN_CONTEXT_PATH))
                         && !importModulePath.contains("shared.domain")
                         && !importModulePath.contains("shared.application")
                         && !isOnExceptionList(importStatement)

@@ -26,6 +26,11 @@
   ]]></description>
 
     <change-notes><![CDATA[
+        <h3>1.2.2</h3>
+		<ul>
+			<li>Disabled inspection for test files. </li>
+			<li>Fixed an issue with some inspections triggering in correct imports.</li>
+		</ul>
     	<h3>1.2.1</h3>
 		<ul>
 			<li>Added settings to add inspection exceptions on certain packages. </li>

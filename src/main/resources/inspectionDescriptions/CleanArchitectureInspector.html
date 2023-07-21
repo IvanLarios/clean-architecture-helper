@@ -1,11 +1,13 @@
 <html lang="en-EN">
 <body>
-Reports imports from infrastructure contexts into domain or application files. <br/>
+Reports imports that don't follow the clean architecture philosophy. Some examples are an import from infrastructure
+context or an external library import in a domain or application file. <br/>
 <b>Example:</b>
 <pre>
 package com.example.backoffice.domain;
 
 import com.example.backoffice.infrastructure.persistence.MySqlBackofficeCourseRepository;
+import javax.validation.constraints.NotNull;
 
 ...
 </pre>
