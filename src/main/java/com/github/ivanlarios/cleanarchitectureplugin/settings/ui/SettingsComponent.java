@@ -22,7 +22,8 @@ public class SettingsComponent {
             CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.weakwarn"),
             CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.info")
     };
-    private final static ImmutableMap<String, ProblemHighlightType> restrictionLevelToHighlightType =
+
+    private static final ImmutableMap<String, ProblemHighlightType> restrictionLevelToHighlightType =
             new ImmutableMap.Builder<String, ProblemHighlightType>()
                     .put(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.error"), ProblemHighlightType.ERROR)
                     .put(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.warning"), ProblemHighlightType.WARNING)
@@ -36,6 +37,8 @@ public class SettingsComponent {
     private final JBCheckBox disallowExternalImportsInDomain = new JBCheckBox(CleanArchitectureBundle.message("cleanarchitecture.settings.imports.domain.allow.checkbox"));
     private final JBCheckBox disallowExternalImportsInApplication = new JBCheckBox(CleanArchitectureBundle.message("cleanarchitecture.settings.imports.application.allow.checkbox"));
     private final ImportExceptionsPanel importExceptionList = new ImportExceptionsPanel();
+
+
 
     public SettingsComponent(PluginSettingState state) {
         mainPanel = FormBuilder.createFormBuilder()
@@ -51,17 +54,17 @@ public class SettingsComponent {
     }
 
     public void setComponentState(PluginSettingState state) {
-        setEnableLinter(state.enableLinter);
+        setEnableLinter(state.isEnableLinter());
         String stateRestrictionLevel =
                 restrictionLevelToHighlightType.entrySet().stream()
-                        .filter(r -> r.getValue().equals(state.restrictionLevel))
+                        .filter(r -> r.getValue().equals(state.getRestrictionLevel()))
                         .map(Map.Entry::getKey)
                         .findFirst().orElse(CleanArchitectureBundle.message("cleanarchitecture.settings.linter.level.info"));
         setRestrictionLevel(stateRestrictionLevel);
-        setDisallowExternalImportsInApplication(state.disallowExternalImportsInApplication);
-        setDisallowExternalImportsInDomain(state.disallowExternalImportsInDomain);
-        setExceptions(state.importExceptions);
-        updateLinterState(state.enableLinter);
+        setDisallowExternalImportsInApplication(state.isDisallowExternalImportsInApplication());
+        setDisallowExternalImportsInDomain(state.isDisallowExternalImportsInDomain());
+        setExceptions(state.getImportExceptions());
+        updateLinterState(state.isEnableLinter());
     }
 
     private void updateLinterState(boolean isSelected){

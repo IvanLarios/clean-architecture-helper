@@ -8,14 +8,15 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
-public class MainAction extends AnAction {
+public class AddModuleAction extends AnAction {
 
+    @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
         return ActionUpdateThread.BGT;
     }
     @Override
     public void update(AnActionEvent event) {
-        event.getPresentation().setVisible(isPsiElementDirectory(event));
+        event.getPresentation().setEnabledAndVisible(isPsiElementDirectory(event));
     }
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {

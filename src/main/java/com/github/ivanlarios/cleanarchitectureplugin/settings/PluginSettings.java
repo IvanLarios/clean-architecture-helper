@@ -44,11 +44,11 @@ public class PluginSettings implements Configurable {
 
     @Override
     public void apply() {
-        state.enableLinter = settingsComponent.getEnableLinter();
-        state.disallowExternalImportsInDomain = settingsComponent.getDisallowExternalImportsInDomain();
-        state.disallowExternalImportsInApplication = settingsComponent.getDisallowExternalImportsInApplication();
-        state.restrictionLevel = settingsComponent.getRestrictionLevel();
-        state.importExceptions = settingsComponent.getExceptions();
+        state.setEnableLinter(settingsComponent.getEnableLinter());
+        state.setDisallowExternalImportsInDomain(settingsComponent.getDisallowExternalImportsInDomain());
+        state.setDisallowExternalImportsInApplication(settingsComponent.getDisallowExternalImportsInApplication());
+        state.setRestrictionLevel(settingsComponent.getRestrictionLevel());
+        state.setImportExceptions(settingsComponent.getExceptions());
     }
 
     @Override

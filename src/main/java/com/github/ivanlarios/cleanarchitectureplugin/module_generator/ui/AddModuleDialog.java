@@ -15,7 +15,7 @@ public class AddModuleDialog extends JDialog {
     private JLabel moduleNameLabel;
     private JCheckBox persistenceCheckBox;
     private JCheckBox apiCheckBox;
-    private final AnActionEvent event;
+    private final transient AnActionEvent event;
     public AddModuleDialog(AnActionEvent event) {
         this.event = event;
         setContentPane(contentPane);
@@ -29,6 +29,7 @@ public class AddModuleDialog extends JDialog {
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 onCancel();
             }

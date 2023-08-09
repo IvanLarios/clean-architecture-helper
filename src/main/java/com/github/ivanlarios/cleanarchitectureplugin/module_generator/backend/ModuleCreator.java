@@ -8,6 +8,10 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 
 public class ModuleCreator {
+
+    private ModuleCreator(){
+        //Private constructor to hide public one
+    }
     public static void createModuleFolderStructure(ModuleModel module, Project project, PsiDirectory baseDirectory) {
         WriteCommandAction.runWriteCommandAction(project, () -> createFilesAndDirectories(module, baseDirectory));
     }
@@ -15,12 +19,12 @@ public class ModuleCreator {
         PsiDirectory baseModuleDirectory = baseDirectory.createSubdirectory(data.getName());
         baseModuleDirectory.createSubdirectory("application");
         baseModuleDirectory.createSubdirectory("domain");
-        PsiDirectory infraestructureDirectory = baseModuleDirectory.createSubdirectory("infrastructure");
+        PsiDirectory infrastructureDirectory = baseModuleDirectory.createSubdirectory("infrastructure");
         if(data.hasApi()) {
-            infraestructureDirectory.createSubdirectory("api");
+            infrastructureDirectory.createSubdirectory("api");
         }
         if(data.hasPersistence()){
-            infraestructureDirectory.createSubdirectory("persistence");
+            infrastructureDirectory.createSubdirectory("persistence");
         }
     }
 

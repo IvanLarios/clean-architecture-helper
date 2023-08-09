@@ -20,18 +20,18 @@ import java.util.List;
 )
 public class PluginSettingState implements PersistentStateComponent<PluginSettingState> {
 
-    public boolean enableLinter;
-    public ProblemHighlightType restrictionLevel;
-    public boolean disallowExternalImportsInDomain;
-    public boolean disallowExternalImportsInApplication;
-    public List<String> importExceptions;
+    private boolean enableLinter;
+    private ProblemHighlightType restrictionLevel;
+    private boolean disallowExternalImportsInDomain;
+    private boolean disallowExternalImportsInApplication;
+    private List<String> importExceptions;
 
     public PluginSettingState(){
-        this.enableLinter = false;
-        this.restrictionLevel = ProblemHighlightType.WEAK_WARNING;
-        this.disallowExternalImportsInDomain = false;
-        this.disallowExternalImportsInApplication = false;
-        this.importExceptions = new ArrayList<>();
+        this.setEnableLinter(false);
+        this.setRestrictionLevel(ProblemHighlightType.WEAK_WARNING);
+        this.setDisallowExternalImportsInDomain(false);
+        this.setDisallowExternalImportsInApplication(false);
+        this.setImportExceptions(new ArrayList<>());
     }
 
     public static PluginSettingState getInstance(@NotNull final Project project) {
@@ -56,10 +56,50 @@ public class PluginSettingState implements PersistentStateComponent<PluginSettin
         if(this == object) {
             return true;
         }
-        return this.enableLinter == anotherState.enableLinter
-        && this.restrictionLevel == anotherState.restrictionLevel
-        && this.disallowExternalImportsInDomain == anotherState.disallowExternalImportsInDomain
-        && this.disallowExternalImportsInApplication == anotherState.disallowExternalImportsInApplication
-        && this.importExceptions.equals(anotherState.importExceptions);
+        return this.isEnableLinter() == anotherState.isEnableLinter()
+        && this.getRestrictionLevel() == anotherState.getRestrictionLevel()
+        && this.isDisallowExternalImportsInDomain() == anotherState.isDisallowExternalImportsInDomain()
+        && this.isDisallowExternalImportsInApplication() == anotherState.isDisallowExternalImportsInApplication()
+        && this.getImportExceptions().equals(anotherState.getImportExceptions());
+    }
+
+    public boolean isEnableLinter() {
+        return enableLinter;
+    }
+
+    public void setEnableLinter(boolean enableLinter) {
+        this.enableLinter = enableLinter;
+    }
+
+    public ProblemHighlightType getRestrictionLevel() {
+        return restrictionLevel;
+    }
+
+    public void setRestrictionLevel(ProblemHighlightType restrictionLevel) {
+        this.restrictionLevel = restrictionLevel;
+    }
+
+    public boolean isDisallowExternalImportsInDomain() {
+        return disallowExternalImportsInDomain;
+    }
+
+    public void setDisallowExternalImportsInDomain(boolean disallowExternalImportsInDomain) {
+        this.disallowExternalImportsInDomain = disallowExternalImportsInDomain;
+    }
+
+    public boolean isDisallowExternalImportsInApplication() {
+        return disallowExternalImportsInApplication;
+    }
+
+    public void setDisallowExternalImportsInApplication(boolean disallowExternalImportsInApplication) {
+        this.disallowExternalImportsInApplication = disallowExternalImportsInApplication;
+    }
+
+    public List<String> getImportExceptions() {
+        return importExceptions;
+    }
+
+    public void setImportExceptions(List<String> importExceptions) {
+        this.importExceptions = importExceptions;
     }
 }

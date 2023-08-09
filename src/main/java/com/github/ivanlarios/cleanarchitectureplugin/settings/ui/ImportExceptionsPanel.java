@@ -30,9 +30,9 @@ public class ImportExceptionsPanel extends JPanel {
         ToolbarDecorator decorator = ToolbarDecorator.createDecorator(importList)
                 .setScrollPaneBorder(JBUI.Borders.empty())
                 .setPanelBorder(JBUI.Borders.customLine(JBColor.border(),1,1,0,1))
-                .setAddAction(__ -> addImportException())
-                .setEditAction(__ -> editImportException())
-                .setRemoveAction(__ -> removeImportException())
+                .setAddAction(empty -> addImportException())
+                .setEditAction(empty -> editImportException())
+                .setRemoveAction(empty -> removeImportException())
                 .disableUpDownActions();
         add(decorator.createPanel(), BorderLayout.NORTH);
         JScrollPane scrollPane = new JBScrollPane(importList);

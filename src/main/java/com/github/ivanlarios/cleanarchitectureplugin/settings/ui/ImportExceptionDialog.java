@@ -14,6 +14,7 @@ public class ImportExceptionDialog extends JDialog {
         setModal(true);
     }
 
+    @Override
     public JPanel getContentPane() {
         return contentPane;
     }
