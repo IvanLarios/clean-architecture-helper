@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @State(
         name = "com.github.ivanlarios.cleanarchitectureplugin.settings.PluginSettingState",
@@ -34,10 +35,6 @@ public class PluginSettingState implements PersistentStateComponent<PluginSettin
         this.setImportExceptions(new ArrayList<>());
     }
 
-    public static PluginSettingState getInstance(@NotNull final Project project) {
-        return project.getService(PluginSettingState.class);
-    }
-
     @Override
     public @Nullable PluginSettingState getState() {
         return this;
@@ -46,6 +43,10 @@ public class PluginSettingState implements PersistentStateComponent<PluginSettin
     @Override
     public void loadState(@NotNull PluginSettingState state) {
         XmlSerializerUtil.copyBean(state, this);
+    }
+
+    public static PluginSettingState getInstance(@NotNull final Project project) {
+        return project.getService(PluginSettingState.class);
     }
 
     @Override
@@ -61,6 +62,17 @@ public class PluginSettingState implements PersistentStateComponent<PluginSettin
         && this.isDisallowExternalImportsInDomain() == anotherState.isDisallowExternalImportsInDomain()
         && this.isDisallowExternalImportsInApplication() == anotherState.isDisallowExternalImportsInApplication()
         && this.getImportExceptions().equals(anotherState.getImportExceptions());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                enableLinter,
+                restrictionLevel,
+                disallowExternalImportsInDomain,
+                disallowExternalImportsInApplication,
+                importExceptions
+        );
     }
 
     public boolean isEnableLinter() {

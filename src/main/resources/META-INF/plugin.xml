@@ -17,14 +17,19 @@
     architectures.
     <h3>Features</h3>
     <ul>
-        <li>You can create a new module following the clean architecture guidelines by right-clicking a folder and selecting
-        "Generate Clean Architecture Module". </li>
+        <li>You can create a new module following the clean architecture guidelines by right-clicking a folder and going
+        New | Clean Architecture Module. </li>
         <li>You can enable and customize code inspections that will highlight your code whenever you break one of the rules
         of a Clean Architecture according to your restriction level.</li>
     </ul>
   ]]></description>
 
     <change-notes><![CDATA[
+        <h3>1.2.4</h3>
+		<ul>
+			<li>Upgraded New Clean Architecture Module dialog. </li>
+			<li>Improved plugin stability.</li>
+		</ul>
         <h3>1.2.3</h3>
 		<ul>
 			<li>Usability improvements like moving the module generator action to a more suitable menu. </li>
@@ -64,7 +69,6 @@
                 groupBundle="messages.InspectionsBundle"
                 groupKey="group.names.probable.bugs"
                 enabledByDefault="true"
-                displayName="Infrastructure file imported on domain or application."
                 shortName="CleanArchitectureInspector"
                 level="WARNING"
                 implementationClass="com.github.ivanlarios.cleanarchitectureplugin.dependency_inspector.DependencyInspector"
@@ -79,11 +83,9 @@
 
     </extensions>
 
-    <actions>
-        <action id="com.github.ivanlarios.cleanarchitectureplugin.module_generator.AddModuleAction"
+    <actions resource-bundle="messages.CleanArchitecture">
+        <action id="cleanarchitecture.action.menu"
                 class="com.github.ivanlarios.cleanarchitectureplugin.module_generator.AddModuleAction"
-                text="Clean Architecture Module"
-                description="Generates clean architecture folder structure"
                 icon="AllIcons.Actions.ModuleDirectory">
             <add-to-group
                     group-id="NewGroup"

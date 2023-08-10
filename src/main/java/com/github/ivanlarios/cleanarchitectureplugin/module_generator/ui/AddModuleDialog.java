@@ -2,57 +2,48 @@ package com.github.ivanlarios.cleanarchitectureplugin.module_generator.ui;
 
 import com.github.ivanlarios.cleanarchitectureplugin.module_generator.backend.ModuleCreator;
 import com.github.ivanlarios.cleanarchitectureplugin.module_generator.models.ModuleModel;
+import com.github.ivanlarios.cleanarchitectureplugin.settings.CleanArchitectureBundle;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.ui.DialogWrapper;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.awt.event.*;
 
-public class AddModuleDialog extends JDialog {
+public class AddModuleDialog extends DialogWrapper {
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
     private JTextField moduleNameInput;
     private JLabel moduleNameLabel;
     private JCheckBox persistenceCheckBox;
     private JCheckBox apiCheckBox;
-    private final transient AnActionEvent event;
+    private final AnActionEvent event;
+
     public AddModuleDialog(AnActionEvent event) {
+        super(true);
+        setTitle(CleanArchitectureBundle.message("cleanarchitecture.action.dialog.title"));
+        init();
         this.event = event;
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-
-        buttonOK.addActionListener(e -> onOK());
-
-        buttonCancel.addActionListener(e -> onCancel());
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void onOK() {
+    @Override
+    protected @Nullable JComponent createCenterPanel() {
+        return contentPane;
+    }
+
+    @Override
+    protected void doOKAction() {
         ModuleModel moduleModel = new ModuleModel(moduleNameInput.getText(), persistenceCheckBox.isSelected(), apiCheckBox.isSelected());
         ModuleCreator.createModuleFolderStructure(moduleModel, event.getProject(), ModuleCreator.getPath(event));
         dispose();
     }
 
-    private void onCancel() {
+    @Override
+    public void doCancelAction() {
         dispose();
     }
 
     public static void initDialog(AnActionEvent e) {
         AddModuleDialog dialog = new AddModuleDialog(e);
-        dialog.setUndecorated(true);
-        dialog.pack();
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
+        dialog.show();
     }
+
 }
