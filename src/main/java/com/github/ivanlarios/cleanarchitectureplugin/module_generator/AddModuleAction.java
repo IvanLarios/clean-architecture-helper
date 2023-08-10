@@ -2,13 +2,13 @@ package com.github.ivanlarios.cleanarchitectureplugin.module_generator;
 
 import com.github.ivanlarios.cleanarchitectureplugin.module_generator.ui.AddModuleDialog;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
-public class AddModuleAction extends AnAction {
+public class AddModuleAction extends DumbAwareAction {
 
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
