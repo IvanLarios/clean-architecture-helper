@@ -1,12 +1,11 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
-<idea-plugin>
+<idea-plugin require-restart="false">
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>com.github.ivanlarios.clean-architecture-plugin</id>
-
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Clean-Architecture</name>
-
+    <name>Clean Architecture Helper</name>
+    <idea-version since-build="223"/>
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="ivan.larios.lopez@gmail.com" url="https://github.com/IvanLarios">Iván Larios</vendor>
 
